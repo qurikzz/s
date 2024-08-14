@@ -32,7 +32,7 @@ function Score()
         end
     end
     pcall(function()
-        repeat wait() until workspace.FootballField:WaitForChild("SoccerBall")
+        repeat wait() until workspace.FootballField:FindFirstChild("SoccerBall")
         for i = 1, 7 do
             hrp.CFrame = workspace.FootballField.Pitch["Goal"..letter].GoalNetTop.CFrame - Vector3.new(0, 5, 0)
             workspace.FootballField.SoccerBall.CFrame = hrp.CFrame
