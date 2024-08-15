@@ -17,14 +17,14 @@ function Score()
     local file
     local letter
     if game.Players.LocalPlayer.Character:FindFirstChild("Team") then
-        file = game.Players.LocalPlayer.Character.Team
+        file = game.Players.LocalPlayer.Character:FindFirstChild("Team")
         if file.Value == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelA.Text then
             letter = "B"
         elseif file.Value == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelB.Text then
             letter = "A"
         end
     else
-        file = game.Players.LocalPlayer.Character["UpperTorso"].SurfaceGui.Team
+        file = game.Players.LocalPlayer.Character["UpperTorso"]:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
         if file.Text == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelA.Text then
             letter = "B"
         elseif file.Text == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelB.Text then
