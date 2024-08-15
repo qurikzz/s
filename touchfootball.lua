@@ -8,8 +8,8 @@ end
 _G.ScriptLoaded = true
 
 function Score()
-    repeat wait() until game.Players.LocalPlayer.Character
-    repeat wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    repeat task.wait() until game.Players.LocalPlayer.Character
+    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     local plr = game.Players.LocalPlayer
     local char = plr.Character
     local hrp = char.HumanoidRootPart
@@ -32,7 +32,7 @@ function Score()
         end
     end
     pcall(function()
-        repeat wait() until workspace.FootballField:FindFirstChild("SoccerBall")
+        repeat task.wait() until workspace.FootballField:FindFirstChild("SoccerBall")
         for i = 1, 7 do
             hrp.CFrame = workspace.FootballField.Pitch["Goal"..letter].GoalNetTop.CFrame - Vector3.new(0, 5, 0)
             workspace.FootballField.SoccerBall.CFrame = hrp.CFrame
