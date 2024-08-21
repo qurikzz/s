@@ -8,34 +8,36 @@ end
 _G.ScriptLoaded = true
 
 function Score()
-    repeat task.wait() until game.Players.LocalPlayer.Character
-    repeat task.wait() until game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-    local plr = game.Players.LocalPlayer
+    repeat task.wait() until game:GetService("Players").LocalPlayer.Character
+    repeat task.wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    local plr = game:GetService("Players").LocalPlayer
     local char = plr.Character
     local hrp = char.HumanoidRootPart
     local oldpos = hrp.CFrame
     local file
     local letter
-    if game.Players.LocalPlayer.Character:FindFirstChild("Team") then
-        file = game.Players.LocalPlayer.Character:FindFirstChild("Team")
-        if file.Value == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelA.Text then
+    if char:FindFirstChild("Team") then
+        file = char:FindFirstChild("Team")
+        if file.Value == plr.PlayerGui.Status.FullNameLabelA.Text then
             letter = "B"
-        elseif file.Value == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelB.Text then
+        elseif file.Value == plr.PlayerGui.Status.FullNameLabelB.Text then
             letter = "A"
         end
     else
-        file = game.Players.LocalPlayer.Character["UpperTorso"]:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
-        if file.Text == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelA.Text then
+        file = char["UpperTorso"]:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
+        if file.Text == plr.PlayerGui.Status.FullNameLabelA.Text then
             letter = "B"
-        elseif file.Text == game.Players.LocalPlayer.PlayerGui.Status.FullNameLabelB.Text then
+        elseif file.Text == plr.PlayerGui.Status.FullNameLabelB.Text then
             letter = "A"
         end
     end
     pcall(function()
-        repeat task.wait() until workspace.FootballField:FindFirstChild("SoccerBall")
+        repeat task.wait() until workspace:FindFirstChild("FootballField"):FindFirstChild("SoccerBall")
+        local field = workspace:FindFirstChild("FootballField")
+        local ball = field:FindFirstChild("SoccerBall")
         for i = 1, 7 do
-            hrp.CFrame = workspace.FootballField.Pitch["Goal"..letter].GoalNetTop.CFrame - Vector3.new(0, 5, 0)
-            workspace.FootballField.SoccerBall.CFrame = hrp.CFrame
+            hrp.CFrame = field.Pitch["Goal"..letter].GoalNetTop.CFrame - Vector3.new(0, 5, 0)
+            ball.CFrame = hrp.CFrame
             task.wait(0.5)
         end
         hrp.CFrame = oldpos
