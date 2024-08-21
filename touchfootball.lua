@@ -12,19 +12,19 @@ function Score()
     repeat task.wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     local plr = game:GetService("Players").LocalPlayer
     local char = plr.Character
-    local hrp = char.HumanoidRootPart
+    local hrp = char:FindFirstChild("HumanoidRootPart")
     local oldpos = hrp.CFrame
     local file
     local letter
     if char:FindFirstChild("Team") then
         file = char:FindFirstChild("Team")
-        if file.Value == plr.PlayerGui.Status.FullNameLabelA.Text then
+        if file.Value == plr.PlayerGui.Status:FindFirstChild("FullNameLabelA").Text then
             letter = "B"
-        elseif file.Value == plr.PlayerGui.Status.FullNameLabelB.Text then
+        elseif file.Value == plr.PlayerGui.Status:FindFirstChild("FullNameLabelB").Text then
             letter = "A"
         end
     else
-        file = char["UpperTorso"]:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
+        file = char:FindFirstChild("UpperTorso"):FindFirstChild("SurfaceGui"):FindFirstChild("Team")
         if file.Text == plr.PlayerGui.Status.FullNameLabelA.Text then
             letter = "B"
         elseif file.Text == plr.PlayerGui.Status.FullNameLabelB.Text then
