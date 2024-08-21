@@ -25,9 +25,9 @@ function Score()
         end
     else
         file = char:FindFirstChild("UpperTorso"):FindFirstChild("SurfaceGui"):FindFirstChild("Team")
-        if file.Text == plr.PlayerGui.Status.FullNameLabelA.Text then
+        if file.Text == plr.PlayerGui.Status:FindFirstChild("FullNameLabelA").Text then
             letter = "B"
-        elseif file.Text == plr.PlayerGui.Status.FullNameLabelB.Text then
+        elseif file.Text == plr.PlayerGui.Status:FindFirstChild("FullNameLabelB").Text then
             letter = "A"
         end
     end
