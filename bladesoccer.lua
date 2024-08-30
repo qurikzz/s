@@ -26,6 +26,7 @@ function lmao()
                 game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, true, blockButton, 0)
                 game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, false, blockButton, 0)
             end
+            task.wait()
             character:MoveTo(oldPosition)
         end
     end
