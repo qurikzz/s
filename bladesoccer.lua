@@ -20,7 +20,7 @@ function lmao()
     if ball and playerGoal then
         local distanceToPlayerGoal = (ball.Position - playerGoal.Position).Magnitude
         if distanceToPlayerGoal <= 100 then
-            character:MoveTo(ball.Position - Vector3.new(0, 5, 0))
+            character:MoveTo(ball.Position - Vector3.new(0, 3, 0))
             task.wait()
             local blockButton = player.PlayerGui.Gui.ActionsContainer:FindFirstChild("BlockButton")
             if blockButton then
