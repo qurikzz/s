@@ -19,7 +19,7 @@ function lmao()
 
     if ball and playerGoal then
         local distanceToPlayerGoal = (ball.Position - playerGoal.Position).Magnitude
-        if distanceToPlayerGoal <= 100 then
+        if distanceToPlayerGoal <= 75 then
             character.HumanoidRootPart.CFrame = ball.CFrame
             local blockButton = player.PlayerGui.Gui.ActionsContainer:FindFirstChild("BlockButton")
             if blockButton then
