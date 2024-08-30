@@ -1,5 +1,5 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
-if game.PlaceId ~= 14708545931 then return end
+if not table.find({14708545931, 17145109661}, game.PlaceId) then return end
 if _G.ScriptLoaded then return end
 _G.ScriptLoaded = true
 function lmao()
