@@ -19,7 +19,7 @@ function lmao()
 
     if ball and playerGoal then
         local distanceToPlayerGoal = (ball.Position - playerGoal.Position).Magnitude
-        if distanceToPlayerGoal <= 80 then
+        if distanceToPlayerGoal <= 95 then
             character:MoveTo(ball.Position)
             task.wait()
             local blockButton = player.PlayerGui.Gui.ActionsContainer:FindFirstChild("BlockButton")
@@ -28,7 +28,6 @@ function lmao()
                 game:GetService("VirtualInputManager"):SendMouseButtonEvent(0, 0, 0, false, blockButton, 0)
             end
             character:MoveTo(oldPosition)
-            task.wait()
         end
     end
 end
