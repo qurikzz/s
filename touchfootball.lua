@@ -38,7 +38,7 @@ function Score()
         local field = workspace:FindFirstChild("FootballField")
         local ball = field:FindFirstChild("SoccerBall")
         for i = 1, 7 do
-            hrp.CFrame = field.Pitch["Goal"..letter].GoalNetTop.CFrame - Vector3.new(0, 5, 0)
+            char:MoveTo(field.Pitch["Goal"..letter].GoalNetTop.Position - Vector3.new(0, 5, 0))
             ball.CFrame = hrp.CFrame
             task.wait(0.5)
         end
