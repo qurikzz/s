@@ -14,7 +14,7 @@ function Score()
         local plr = game:GetService("Players").LocalPlayer
         local char = plr.Character
         local hrp = char:FindFirstChild("HumanoidRootPart")
-        local oldpos = hrp.CFrame
+        local oldpos = hrp.Position
         local file
         local letter
 
@@ -42,7 +42,7 @@ function Score()
             ball.CFrame = hrp.CFrame
             task.wait(0.5)
         end
-        hrp.CFrame = oldpos
+        char:MoveTo(oldpos)
     end)
 end
 
