@@ -31,8 +31,9 @@ function lmao()
         end
     end
 end
-game:GetService("RunService").Heartbeat:Connect(function()
+--game:GetService("RunService").Heartbeat:Connect(function()
+while task.wait() do
     pcall(function()
         lmao()
     end)
-end)
+end
