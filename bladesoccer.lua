@@ -37,3 +37,17 @@ while task.wait() do
         lmao()
     end)
 end
+
+local wrudhwkfo = game:GetService("ReplicatedStorage").Remotes.BlockEvent
+local bsvdueind = "FireServer"
+
+local namecall; namecall = hookmetamethod(game, '__namecall', function(caller, ...)
+   local args = {...}
+   local method = getnamecallmethod()
+
+   if not checkcaller() and caller == wrudhwkfo and method == bsvdueind then
+      args[1] = workspace:FindFirstChild("Ball")
+   end
+
+   return namecall(caller, unpack(args))
+end)
