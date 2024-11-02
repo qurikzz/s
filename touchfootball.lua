@@ -7,42 +7,75 @@ if _G.ScriptLoaded then
 end
 _G.ScriptLoaded = true
 
-function Score()
-    pcall(function()
-        repeat task.wait() until game:GetService("Players").LocalPlayer.Character
-        repeat task.wait() until game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local plr = game:GetService("Players").LocalPlayer
-        local char = plr.Character
-        local hrp = char:FindFirstChild("HumanoidRootPart")
-        local oldpos = hrp.Position
-        local file
-        local letter
+_G.CheckTeam = true
+local teamLetter
 
-        if char:FindFirstChild("Team") then
-            file = char:FindFirstChild("Team")
-            if file.Value == plr.PlayerGui.Status:FindFirstChild("FullNameLabelA").Text then
-                letter = "B"
-            elseif file.Value == plr.PlayerGui.Status:FindFirstChild("FullNameLabelB").Text then
-                letter = "A"
-            end
-        else
-            file = char:FindFirstChild("UpperTorso"):FindFirstChild("SurfaceGui"):FindFirstChild("Team")
-            if file.Text == plr.PlayerGui.Status:FindFirstChild("FullNameLabelA").Text then
-                letter = "B"
-            elseif file.Text == plr.PlayerGui.Status:FindFirstChild("FullNameLabelB").Text then
-                letter = "A"
+local players = game:GetService("Players")
+local runService = game:GetService("RunService")
+
+local function determineTeamLetter(character, statusGui)
+    local teamObject
+    local fullNameLabelA = statusGui:FindFirstChild("FullNameLabelA")
+    local fullNameLabelB = statusGui:FindFirstChild("FullNameLabelB")
+    
+    if not fullNameLabelA or not fullNameLabelB then return nil end
+
+    if character:FindFirstChild("Team") then
+        teamObject = character.Team
+        if teamObject.Value == fullNameLabelA.Text then
+            return "B"
+        elseif teamObject.Value == fullNameLabelB.Text then
+            return "A"
+        end
+    else
+        local upperTorso = character:FindFirstChild("UpperTorso")
+        if upperTorso then
+            teamObject = upperTorso:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
+            if teamObject and teamObject.Text then
+                if teamObject.Text == fullNameLabelA.Text then
+                    return "B"
+                elseif teamObject.Text == fullNameLabelB.Text then
+                    return "A"
+                end
             end
         end
+    end
+    return nil
+end
 
-        repeat task.wait() until workspace:FindFirstChild("FootballField"):FindFirstChild("SoccerBall")
+runService.Heartbeat:Connect(function()
+    if not _G.CheckTeam then return end
+    pcall(function()
+        local player = players.LocalPlayer
+        local character = player.Character
+        local statusGui = player.PlayerGui:FindFirstChild("Status")
+        
+        if not statusGui then return end
+        
+        teamLetter = determineTeamLetter(character, statusGui)
+    end)
+end)
+
+local function Score()
+    pcall(function()
+        local player = players.LocalPlayer
+        repeat task.wait() until player.Character
+        local character = player.Character
+        repeat task.wait() until character:FindFirstChild("HumanoidRootPart")
+
+        local hrp = character.HumanoidRootPart
+        local oldPos = hrp.Position
+
         local field = workspace:FindFirstChild("FootballField")
-        local ball = field:FindFirstChild("SoccerBall")
+        local ball = field and field:FindFirstChild("SoccerBall")
+        repeat task.wait() until ball
+
         for i = 1, 7 do
-            char:MoveTo(field.Pitch["Goal"..letter].GoalNetTop.Position - Vector3.new(0, 5, 0))
+            character:MoveTo(field.Pitch["Goal"..teamLetter].GoalNetTop.Position - Vector3.new(0, 5, 0))
             ball.CFrame = hrp.CFrame
             task.wait(0.5)
         end
-        char:MoveTo(oldpos)
+        character:MoveTo(oldPos)
     end)
 end
 
@@ -71,6 +104,4 @@ TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton.TextScaled = true
 TextButton.Font = Enum.Font.SourceSans
 
-TextButton.MouseButton1Down:connect(function()
-    Score()
-end)
+TextButton.MouseButton1Down:Connect(Score)
