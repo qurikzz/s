@@ -8,7 +8,7 @@ end
 _G.ScriptLoaded = true
 
 _G.CheckTeam = true
-local teamLetter
+_G.teamLetter = nil
 
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
@@ -52,7 +52,7 @@ runService.Heartbeat:Connect(function()
         
         if not statusGui then return end
         
-        teamLetter = determineTeamLetter(character, statusGui)
+        _G.teamLetter = determineTeamLetter(character, statusGui)
     end)
 end)
 
@@ -71,7 +71,7 @@ local function Score()
         repeat task.wait() until ball
 
         for i = 1, 7 do
-            character:MoveTo(field.Pitch["Goal"..teamLetter].GoalNetTop.Position - Vector3.new(0, 5, 0))
+            character:MoveTo(field.Pitch["Goal".._G.teamLetter].GoalNetTop.Position - Vector3.new(0, 5, 0))
             ball.CFrame = hrp.CFrame
             task.wait(0.5)
         end
