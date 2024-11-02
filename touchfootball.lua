@@ -69,8 +69,10 @@ local function Score()
         local field = workspace:FindFirstChild("FootballField")
         local ball = field and field:FindFirstChild("SoccerBall")
         repeat task.wait() until ball
-
         local goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
+        if game.PlaceId == 105531756926941 then
+            goalPost = field.Pitch["Goal" .. _G.teamLetter].NetTop.Position
+        end
         for i = 1, 22 do
             character:MoveTo(goalPost)
             task.wait()
