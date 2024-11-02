@@ -71,7 +71,7 @@ local function Score()
         repeat task.wait() until ball
 
         local goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
-        for i = 1, 20 do
+        for i = 1, 22 do
             character:MoveTo(goalPost)
             task.wait()
             ball.CFrame = hrp.CFrame
