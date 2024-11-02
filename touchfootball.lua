@@ -70,12 +70,14 @@ local function Score()
         local ball = field and field:FindFirstChild("SoccerBall")
         repeat task.wait() until ball
 
-        for i = 1, 7 do
-            character:MoveTo(field.Pitch["Goal".._G.teamLetter].GoalNetTop.Position - Vector3.new(0, 5, 0))
+        local goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
+        for i = 1, 20 do
+            character:MoveTo(goalPost)
+            task.wait()
             ball.CFrame = hrp.CFrame
-            task.wait(0.5)
+            task.wait()
+            character:MoveTo(oldPos)
         end
-        character:MoveTo(oldPos)
     end)
 end
 
