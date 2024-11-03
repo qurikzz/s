@@ -75,13 +75,13 @@ local function Score()
         else
             goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
         end
-        for i = 1, 35 do
+        for i = 1, 20 do
             if _G.teamLetter == "B" then
                 character:MoveTo(goalPost + Vector3.new(50, -13, 0))
             else
                 character:MoveTo(goalPost - Vector3.new(50, 13, 0))
             end
-            task.wait()
+            task.wait(0.1)
             ball.CFrame = hrp.CFrame
         end
         character:MoveTo(oldPos)
