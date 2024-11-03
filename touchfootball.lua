@@ -71,12 +71,16 @@ local function Score()
         repeat task.wait() until ball
         local goalPost
         if game.PlaceId == 105531756926941 then
-            goalPost = field.Pitch["Goal" .. _G.teamLetter].NetBack.Position
+            goalPost = field.Pitch["Goal" .. _G.teamLetter].NetTop.Position
         else
-            goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetBack.Position
+            goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
         end
         for i = 1, 22 do
-            character:MoveTo(goalPost - Vector3.new(0, 5, 0))
+            if _G.teamLetter == "B" then
+                character:MoveTo(goalPost + Vector3.new(30, -13, 0))
+            else
+                character:MoveTo(goalPost - Vector3.new(30, 13, 0))
+            end
             task.wait()
             ball.CFrame = hrp.CFrame
             task.wait()
