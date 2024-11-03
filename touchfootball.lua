@@ -83,9 +83,8 @@ local function Score()
             end
             task.wait()
             ball.CFrame = hrp.CFrame
-            task.wait()
-            character:MoveTo(oldPos)
         end
+        character:MoveTo(oldPos)
     end)
 end
 
