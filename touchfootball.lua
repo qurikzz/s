@@ -71,9 +71,9 @@ local function Score()
         repeat task.wait() until ball
         local goalPost
         if game.PlaceId == 105531756926941 then
-            goalPost = field.Pitch["Goal" .. _G.teamLetter].NetTop.Position
+            goalPost = field.Pitch["Goal" .. _G.teamLetter].NetBack.Position
         else
-            goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
+            goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetBack.Position
         end
         for i = 1, 22 do
             character:MoveTo(goalPost)
