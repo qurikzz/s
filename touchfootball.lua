@@ -76,7 +76,7 @@ local function Score()
             goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetBack.Position
         end
         for i = 1, 22 do
-            character:MoveTo(goalPost)
+            character:MoveTo(goalPost - Vector3.new(0, 5, 0))
             task.wait()
             ball.CFrame = hrp.CFrame
             task.wait()
