@@ -9,14 +9,25 @@ _G.ScriptLoaded = true
 
 _G.CheckTeam = true
 _G.teamLetter = nil
+_G.IgnoreMeasuring = true
 
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
 
 pcall(function()
-    for i = 1, 3 do
-        game:GetService("ReplicatedStorage").MeasureLag:Destroy()
-    end
+    local FILE = game:GetService("ReplicatedStorage").MeasureLag
+    local METHOD = "FireServer"
+    
+    local namecall; namecall = hookmetamethod(game, '__namecall', function(caller, ...)
+       local args = {...}
+       local method = getnamecallmethod()
+    
+       if not checkcaller() and caller == FILE and method == METHOD then
+          if _G.IgnoreMeasuring then return end
+       end
+    
+       return namecall(caller, unpack(args))
+    end)
 end)
 
 local function determineTeamLetter(character, statusGui)
