@@ -39,9 +39,9 @@ local function determineTeamLetter(character, statusGui)
             teamObject = upperTorso:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
             if teamObject and teamObject.Text then
                 if teamObject.Text == fullNameLabelA.Text then
-                    return "B"
-                elseif teamObject.Text == fullNameLabelB.Text then
                     return "A"
+                elseif teamObject.Text == fullNameLabelB.Text then
+                    return "B"
                 end
             end
         end
@@ -49,18 +49,12 @@ local function determineTeamLetter(character, statusGui)
     return nil
 end
 
-runService.Heartbeat:Connect(function()
+while task.wait() do
     if not _G.CheckTeam then return end
     pcall(function()
-        local player = players.LocalPlayer
-        local character = player.Character
-        local statusGui = player.PlayerGui:FindFirstChild("Status")
-        
-        if not statusGui then return end
-        
-        _G.teamLetter = determineTeamLetter(character, statusGui)
+        _G.teamLetter = determineTeamLetter(players.LocalPlayer.Character, players.LocalPlayer.PlayerGui.Status)
     end)
-end)
+end
 
 local function Score()
     pcall(function()
@@ -68,38 +62,35 @@ local function Score()
         repeat task.wait() until player.Character
         local character = player.Character
         repeat task.wait() until character:FindFirstChild("HumanoidRootPart")
-
-        local hrp = character.HumanoidRootPart
-        local oldPos = hrp.Position
-
+        local hrp = character:FindFirstChild("HumanoidRootPart")
         local field = workspace:FindFirstChild("FootballField")
         local ball = field and field:FindFirstChild("SoccerBall")
+        local board = player.PlayerGui.Status["Score".._G.teamLetter]
         repeat task.wait() until ball
-        local goalPost
-        if game.PlaceId == 105531756926941 then
-            goalPost = field.Pitch["Goal" .. _G.teamLetter].NetTop.Position
-        else
-            goalPost = field.Pitch["Goal" .. _G.teamLetter].GoalNetTop.Position
-        end
-        for i = 1, 20 do
-            if _G.teamLetter == "B" then
-                character:MoveTo(goalPost + Vector3.new(50, -13, 0))
-            else
-                character:MoveTo(goalPost - Vector3.new(50, 13, 0))
-            end
-            task.wait(0.1)
-            ball.CFrame = hrp.CFrame
-        end
-        character:MoveTo(oldPos)
+        repeat task.wait() until board.Text ~= ""
+        _G.Amount = tonumber(board.Text) + 1
+        ball.CFrame = hrp.CFrame
+        game:GetService("ReplicatedStorage").NearGoalEvent:FireServer(_G.teamLetter)
+        game:GetService("ReplicatedStorage").GoalEvent:FireServer(_G.teamLetter)
     end)
 end
 
-local Positions = UDim2.new(0.822, 0, 0.040, 0)
-local Sizes = UDim2.new(0, 76, 0, 70)
+function Start()
+    if _G.teamLetter == nil then return end
+    repeat
+        Score()
+        task.wait(0.5)
+    until game.Players.LocalPlayer.PlayerGui.Status["Score".._G.teamLetter].Text == _G.Amount
+end
+
+local Positions = UDim2.new(0.7, 0, 0.040, 0)
+local Sizes = UDim2.new(0, 150, 0, 50)
 
 local ms = Instance.new("ScreenGui")
 local stuffdd = Instance.new("Frame")
 local TextButton = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
 
 ms.Name = "hey"
 ms.Parent = game:WaitForChild("CoreGui")
@@ -107,16 +98,37 @@ ms.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 stuffdd.Name = "1"
 stuffdd.Parent = ms
-stuffdd.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+stuffdd.BackgroundTransparency = 1
 stuffdd.Position = Positions
 stuffdd.Size = Sizes
 
 TextButton.Parent = stuffdd
-TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextButton.Size = Sizes
-TextButton.Text = "Score"
-TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
+TextButton.Size = UDim2.new(1, 0, 0.800000012, 0)
+TextButton.Text = "⚽ Score"
+TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 TextButton.TextScaled = true
-TextButton.Font = Enum.Font.SourceSans
+TextButton.Font = Enum.Font.FredokaOne
+TextButton.BorderSizePixel = 0
+TextButton.RichText = false
+TextButton.ClipsDescendants = false
+TextButton.TextStrokeTransparency = 1
 
-TextButton.MouseButton1Down:Connect(Score)
+UICorner.CornerRadius = UDim.new(1, 0)
+UICorner.Parent = TextButton
+
+UIStroke.Parent = TextButton
+UIStroke.Color = Color3.new(0.109804, 0.270588, 0.321569)
+UIStroke.Thickness = 4.070723056793213
+UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+TextButton.MouseButton1Down:Connect(function()
+    TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.TextColor3 = Color3.new(0.231373, 0.694118, 0.988235)
+    TextButton.Text = "Clicked"
+    Start()
+    task.wait(0.2)
+    TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
+    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.Text = "⚽ Score"
+end)
