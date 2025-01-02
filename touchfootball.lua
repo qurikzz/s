@@ -125,14 +125,6 @@ local function Score()
     end)
 end
 
-function Start()
-    if _G.teamLetter == nil then return end
-    repeat
-        Score()
-        task.wait(0.5)
-    until players.LocalPlayer.PlayerGui:FindFirstChild("Status")["Score".._G.teamLetter].Text == _G.Amount
-end
-
 TextButton.MouseButton1Down:Connect(function()
     TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TextButton.TextColor3 = Color3.new(0.231373, 0.694118, 0.988235)
