@@ -130,7 +130,7 @@ function Start()
     repeat
         Score()
         task.wait(0.5)
-    until game.Players.LocalPlayer.PlayerGui.Status["Score".._G.teamLetter].Text == _G.Amount
+    until players.LocalPlayer.PlayerGui:FindFirstChild("Status")["Score".._G.teamLetter].Text == _G.Amount
 end
 
 TextButton.MouseButton1Down:Connect(function()
