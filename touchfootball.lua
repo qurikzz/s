@@ -46,17 +46,6 @@ UIStroke.Color = Color3.new(0.109804, 0.270588, 0.321569)
 UIStroke.Thickness = 4.070723056793213
 UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
-TextButton.MouseButton1Down:Connect(function()
-    TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-    TextButton.TextColor3 = Color3.new(0.231373, 0.694118, 0.988235)
-    TextButton.Text = "Clicked"
-    Start()
-    task.wait(0.2)
-    TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
-    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TextButton.Text = "⚽ Score"
-end)
-
 _G.CheckTeam = true
 _G.teamLetter = nil
 _G.IgnoreMeasuring = true
@@ -81,33 +70,33 @@ pcall(function()
 end)
 
 local function determineTeamLetter(character, statusGui)
-    local teamObject
-    local fullNameLabelA = statusGui:FindFirstChild("FullNameLabelA")
-    local fullNameLabelB = statusGui:FindFirstChild("FullNameLabelB")
+    pcall(function()
+        local teamObject
+        local fullNameLabelA = statusGui:FindFirstChild("FullNameLabelA")
+        local fullNameLabelB = statusGui:FindFirstChild("FullNameLabelB")
     
-    if not fullNameLabelA or not fullNameLabelB then return nil end
-
-    if character:FindFirstChild("Team") then
-        teamObject = character.Team
-        if teamObject.Value == fullNameLabelA.Text then
-            return "B"
-        elseif teamObject.Value == fullNameLabelB.Text then
-            return "A"
-        end
-    else
-        local upperTorso = character:FindFirstChild("UpperTorso")
-        if upperTorso then
-            teamObject = upperTorso:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
-            if teamObject and teamObject.Text then
-                if teamObject.Text == fullNameLabelA.Text then
-                    return "A"
-                elseif teamObject.Text == fullNameLabelB.Text then
-                    return "B"
+        if character:FindFirstChild("Team") then
+            teamObject = character.Team
+            if teamObject.Value == fullNameLabelA.Text then
+                return "A"
+            elseif teamObject.Value == fullNameLabelB.Text then
+                return "B"
+            end
+        else
+            local upperTorso = character:FindFirstChild("UpperTorso")
+            if upperTorso then
+                teamObject = upperTorso:FindFirstChild("SurfaceGui"):FindFirstChild("Team")
+                if teamObject and teamObject.Text then
+                    if teamObject.Text == fullNameLabelA.Text then
+                        return "A"
+                    elseif teamObject.Text == fullNameLabelB.Text then
+                        return "B"
+                    end
                 end
             end
         end
-    end
-    return nil
+        return nil
+    end)
 end
 
 while task.wait() do
@@ -143,3 +132,14 @@ function Start()
         task.wait(0.5)
     until game.Players.LocalPlayer.PlayerGui.Status["Score".._G.teamLetter].Text == _G.Amount
 end
+
+TextButton.MouseButton1Down:Connect(function()
+    TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.TextColor3 = Color3.new(0.231373, 0.694118, 0.988235)
+    TextButton.Text = "Clicked"
+    Start()
+    task.wait(0.2)
+    TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
+    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextButton.Text = "⚽ Score"
+end)
