@@ -99,12 +99,12 @@ local function determineTeamLetter(character, statusGui)
     end)
 end
 
-while task.wait() do
+runService.Heartbeat:Connect(function()
     if not _G.CheckTeam then return end
     pcall(function()
         _G.teamLetter = determineTeamLetter(players.LocalPlayer.Character, players.LocalPlayer.PlayerGui.Status)
     end)
-end
+end)
 
 local function Score()
     pcall(function()
@@ -125,20 +125,29 @@ local function Score()
     end)
 end
 
+local sactive = false;
+
 TextButton.MouseButton1Down:Connect(function()
     TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     TextButton.TextColor3 = Color3.new(0.231373, 0.694118, 0.988235)
     TextButton.Text = "Clicked"
 
-    if _G.teamLetter ~= nil then 
+    if _G.teamLetter ~= nil and not sactive then
+        sactive = true;
+        board = players.LocalPlayer.PlayerGui:WaitForChild("Status"):WaitForChild("Score" .. _G.teamLetter);
+        cscore = tonumber(board.Text);
         repeat
-            Score()
-            task.wait(0.5)
-        until players.LocalPlayer.PlayerGui:FindFirstChild("Status")["Score".._G.teamLetter].Text == tostring(_G.Amount)
-    end
+            Score();
+            task.wait(0.5);
+        until players.LocalPlayer.PlayerGui:FindFirstChild("Status")["Score" .. _G.teamLetter].Text ~= tostring(cscore);
 
-    task.wait(0.2)
-    TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
-    TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    TextButton.Text = "⚽ Score"
+        board.Changed:Connect(function()
+            if tonumber(board.Text) > cscore then
+                TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
+                TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+                TextButton.Text = "⚽ Score"
+                sactive = false;
+            end
+        end)
+    end
 end)
