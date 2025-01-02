@@ -125,11 +125,11 @@ local function Score()
     end)
 end
 
-function ok()
+local function ok()
     while task.wait() do
         pcall(function()
             Score()
-            if player.PlayerGui.Status["Score".._G.teamLetter].Text == tostring(_G.Amount) then
+            if players.LocalPlayer.PlayerGui.Status["Score".._G.teamLetter].Text == tostring(_G.Amount) then
                 break
             end
         end)
