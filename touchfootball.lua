@@ -13,6 +13,12 @@ _G.teamLetter = nil
 local players = game:GetService("Players")
 local runService = game:GetService("RunService")
 
+pcall(function()
+    for i = 1, 3 do
+        game:GetService("ReplicatedStorage").MeasureLag:Destroy()
+    end
+end)
+
 local function determineTeamLetter(character, statusGui)
     local teamObject
     local fullNameLabelA = statusGui:FindFirstChild("FullNameLabelA")
