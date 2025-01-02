@@ -121,7 +121,7 @@ local function cUI()
         else
             TextButton.Text = "Please, wait..."
         end
-        task.wait(0.2)
+        task.wait(0.3)
         TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
         TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
         TextButton.Text = "⚽ Score"
