@@ -49,27 +49,8 @@ runService.Heartbeat:Connect(function()
 end)
 
 local function Score()
-    local character = localPlayer.Character
-    local hrp = character:WaitForChild("HumanoidRootPart")
-    local field = workspace:FindFirstChild("FootballField")
-    local ball = field and field:WaitForChild("SoccerBall")
-    
-    if ball then
-        ball.CFrame = hrp.CFrame
-        replicatedStorage.NearGoalEvent:FireServer(_G.teamLetter)
-        replicatedStorage.GoalEvent:FireServer(_G.teamLetter)
-    end
-end
-
-local function ok()
-    local STATUS = localPlayer.PlayerGui.Status["Score".._G.teamLetter]
-    local Amount = tonumber(STATUS.Text)
-    while task.wait() do
-        Score()
-        if tonumber(STATUS.Text) > Amount then
-            break
-        end
-    end
+    replicatedStorage.KickBall:FireServer(Vector3.new(0, 0, 0),Vector3.new(0, 0, 0),Vector3.new(0, 0, 0),0,"djhtelkds")
+    replicatedStorage.GoalEvent:FireServer(_G.teamLetter)
 end
 
 local function cUI()
@@ -117,7 +98,7 @@ local function cUI()
         TextButton.TextColor3 = Color3.new(0.231373, 0.694118, 0.988235)
         if localPlayer.Character:FindFirstChild("Team") then
             TextButton.Text = "Scoring"
-            ok()
+            Score()
         else
             TextButton.Text = "Please, wait..."
         end
