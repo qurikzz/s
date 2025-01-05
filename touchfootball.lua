@@ -46,6 +46,7 @@ end
 runService.Heartbeat:Connect(function()
     if not _G.CheckTeam then return end
     pcall(function() _G.teamLetter = determineTeamLetter() end)
+    pcall(function() localPlayer.Character.Head.BillboardGui:Destroy() end)
 end)
 
 local function Score()
