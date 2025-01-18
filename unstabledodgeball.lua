@@ -20,6 +20,7 @@ s.Button1Down:Connect(function()
 end)
 
 local function cUI()
+    local modeText = _G.Ya and "<font color='rgb(0,255,0)'>ON</font>" or "<font color='rgb(255,0,0)'>OFF</font>"
     local Positions = UDim2.new(0.7, 0, 0.040, 0)
     local Sizes = UDim2.new(0, 150, 0, 50)
 
@@ -42,7 +43,7 @@ local function cUI()
     TextButton.Parent = stuffdd
     TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
     TextButton.Size = UDim2.new(1, 0, 0.8, 0)
-    TextButton.Text = "🏐 Toggle Mode"
+    TextButton.Text = string.format("🏐 Toggle Mode\n<font size='12'>Mode: %s</font>", modeText)
     TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
     TextButton.TextScaled = true
     TextButton.Font = Enum.Font.FredokaOne
@@ -61,7 +62,7 @@ local function cUI()
 
     TextButton.MouseButton1Down:Connect(function()
         _G.Ya = not _G.Ya
-        local modeText = _G.Ya and "<font color='rgb(0,255,0)'>ON</font>" or "<font color='rgb(255,0,0)'>OFF</font>"
+        modeText = _G.Ya and "<font color='rgb(0,255,0)'>ON</font>" or "<font color='rgb(255,0,0)'>OFF</font>"
         TextButton.Text = string.format("🏐 Toggle Mode\n<font size='12'>Mode: %s</font>", modeText)
     end)
 end
