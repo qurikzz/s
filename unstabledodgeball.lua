@@ -47,7 +47,7 @@ local function cUI()
     TextButton.TextScaled = true
     TextButton.Font = Enum.Font.FredokaOne
     TextButton.BorderSizePixel = 0
-    TextButton.RichText = false
+    TextButton.RichText = true
     TextButton.ClipsDescendants = false
     TextButton.TextStrokeTransparency = 1
 
@@ -61,15 +61,9 @@ local function cUI()
 
     TextButton.MouseButton1Down:Connect(function()
         _G.Ya = not _G.Ya
-        TextButton.BackgroundColor3 = _G.Ya and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
-        TextButton.Text = _G.Ya and "Mode On" or "Mode Off"
-        task.wait(0.3)
-        TextButton.BackgroundColor3 = Color3.new(0.231373, 0.694118, 0.988235)
-        TextButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-        TextButton.Text = "🏐 Toggle Mode"
+        local modeText = _G.Ya and "<font color='rgb(0,255,0)'>ON</font>" or "<font color='rgb(255,0,0)'>OFF</font>"
+        TextButton.Text = string.format("🏐 Toggle Mode\n<font size='12'>Mode: %s</font>", modeText)
     end)
-
-    TextButton.BackgroundColor3 = _G.Ya and Color3.fromRGB(0, 255, 0) or Color3.fromRGB(255, 0, 0)
 end
 
 cUI()
