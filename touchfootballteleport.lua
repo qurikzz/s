@@ -3,33 +3,27 @@ if game.PlaceId ~= 16447934574 then return end
 if _G.ScriptLoaded then return end
 _G.ScriptLoaded = true
 
-workspace.Lobby.Portals.PortalEliteClanLeague.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16452714764)
-end)
-workspace.Lobby.Portals.PortalElite.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16876418704)
-end)
-workspace.Lobby.Portals.PortalPro.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16452698027)
-end)
-workspace.Lobby.Portals.PortalGold.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16452695324)
-end)
-workspace.Lobby.Portals.PortalJunior.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16452693191)
-end)
-workspace.Lobby.Portals.PortalStory.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(81844361462023)
-end)
-workspace.Lobby.Portals.PortalStreet.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(105531756926941)
-end)
-workspace.Lobby.Portals.PortalFutsal.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16452721151)
-end)
-workspace.Lobby.Portals.PortalCup.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(16453243555)
-end)
-workspace.Lobby.Portals.Portal1vs1.Touched:Connect(function()
-    game:GetService("TeleportService"):Teleport(18738477182)
-end)
+local ts = game:GetService("TeleportService")
+
+local portals = {
+    PortalEliteClanLeague = 16452714764,
+    PortalElite = 16876418704,
+    PortalPro = 16452698027,
+    PortalGold = 16452695324,
+    PortalJunior = 16452693191,
+    PortalQuests = 81844361462023,
+    PortalStreet = 105531756926941,
+    PortalFutsal = 16452721151,
+    PortalCup = 16453243555,
+    Portal1vs1 = 18738477182
+}
+
+function tp(pn, pd)
+    workspace.Lobby.Portals[pn].Touched:Connect(function()
+        ts:Teleport(pd)
+    end)
+end
+
+for pn, pd in pairs(portals) do
+    tp(pn, pd)
+end
